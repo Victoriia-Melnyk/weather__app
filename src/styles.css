@@ -6,7 +6,7 @@ body {
 }
 
 .widget {
-	width: 60%;
+	max-width: 60%;
 	margin: 0 auto;
 	text-align: center;
 	border: 1px solid #b7dae6;
@@ -53,6 +53,9 @@ img {
 	margin-bottom: 15px;
 }
 
+#description::first-letter {
+  text-transform: capitalize;
+}
 .source-link {
   text-align: center;
 	color: #fff;

@@ -59,8 +59,11 @@ monthElement.innerHTML = formatMonth(currentDate);
 function changeWeatherDataByCity(event) {
 	event.preventDefault();
 	let city = document.querySelector('#form-input').value;
+	let currentCity = document.querySelector('#current-city');
+	currentCity.innerHTML = city;
+
 	let key = 'ab3b706b8e9b1f3dfc03939f848fe9da';
-	let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric`;
+	let url = `https://api.openweathermap.org/data/2.5/weather?q=${currentCity.innerHTML}&units=metric`;
 	axios.get(`${url}&appid=${key}`).then(response => {
 		let temperatureElement = document.querySelector('#temperature');
 		let humidityElement = document.querySelector('#humidity');
@@ -71,11 +74,8 @@ function changeWeatherDataByCity(event) {
 		windElement.innerHTML = `wind: ${Math.round(
 			response.data.wind.speed
 		)} km/hr`;
-		descriptionElement.innerHTML = response.data.weather[0].main;
+		descriptionElement.innerHTML = response.data.weather[0].description;
 	});
-
-	let currentCity = document.querySelector('#current-city');
-	currentCity.innerHTML = city;
 }
 
 function changeWeatherDataByGeo(event) {
