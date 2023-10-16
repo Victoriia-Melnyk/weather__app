@@ -1,0 +1,54 @@
+body {
+	font-family: 'Poppins', sans-serif;
+	background-image: url(/images/sky.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.widget {
+	width: 60%;
+	margin: 0 auto;
+	text-align: center;
+	border: 1px solid #b7dae6;
+	border-radius: 20px;
+	padding: 20px;
+	margin-top: 30px;
+}
+
+.row {
+	justify-content: center;
+}
+div.col-4,
+div.col-2 {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+hr {
+	display: block;
+	color: black;
+	width: 80%;
+	margin: 30px auto 0;
+}
+img {
+	height: 100px;
+	width: 50px;
+}
+
+.celcius-link,
+.fahrenheit-link {
+  text-decoration: none;
+	font-size: 15px;
+}
+
+.input-group {
+  margin: 10px 0 30px;
+}
+
+#image-main {
+  height: 150px;
+	width: 150px;
+	margin-bottom: 15px;
+}
