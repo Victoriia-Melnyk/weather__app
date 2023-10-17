@@ -62,19 +62,22 @@ function changeWeatherDataByCity(event) {
 	let currentCity = document.querySelector('#current-city');
 	currentCity.innerHTML = city;
 
-	let key = 'ab3b706b8e9b1f3dfc03939f848fe9da';
-	let url = `https://api.openweathermap.org/data/2.5/weather?q=${currentCity.innerHTML}&units=metric`;
-	axios.get(`${url}&appid=${key}`).then(response => {
+	let key = 'aao33d4100dc1f18c42d1b9teb580408';
+	let url = `https://api.shecodes.io/weather/v1/current?query=${currentCity.innerHTML}&key=${key}&units=metric`;
+	axios.get(`${url}`).then(response => {
+		console.log(response);
 		let temperatureElement = document.querySelector('#temperature');
 		let humidityElement = document.querySelector('#humidity');
 		let windElement = document.querySelector('#wind');
 		let descriptionElement = document.querySelector('#description');
-		temperatureElement.innerHTML = Math.round(response.data.main.temp);
-		humidityElement.innerHTML = `humidity: ${response.data.main.humidity}%`;
+		let iconElement = document.querySelector('#icon');
+		temperatureElement.innerHTML = Math.round(response.data.temperature.current);
+		humidityElement.innerHTML = `humidity: ${response.data.temperature.humidity}%`;
 		windElement.innerHTML = `wind: ${Math.round(
 			response.data.wind.speed
 		)} km/hr`;
-		descriptionElement.innerHTML = response.data.weather[0].description;
+		descriptionElement.innerHTML = response.data.condition.description;
+		iconElement.setAttribute('src', `${response.data.condition.icon_url}`);
 	});
 }
 
@@ -83,25 +86,31 @@ function changeWeatherDataByGeo(event) {
 	navigator.geolocation.getCurrentPosition(position => {
 		let latitude = position.coords.latitude;
 		let longtitude = position.coords.longitude;
-		let key = 'ab3b706b8e9b1f3dfc03939f848fe9da';
-		let url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longtitude}&appid=${key}&units=metric`;
+		let key = 'aao33d4100dc1f18c42d1b9teb580408';
+		let url = `https://api.shecodes.io/weather/v1/current?lon=${longtitude}&lat=${latitude}&key=${key}&units=metric`;
 		axios.get(url).then(response => {
-			let location = response.data.name;
-			let cityElement = document.querySelector('#current-city');
+			let location = response.data.city;
 			let temperatureElement = document.querySelector('#temperature');
 			let humidityElement = document.querySelector('#humidity');
 			let windElement = document.querySelector('#wind');
 			let descriptionElement = document.querySelector('#description');
-			temperatureElement.innerHTML = Math.round(response.data.main.temp);
-			humidityElement.innerHTML = `humidity: ${response.data.main.humidity}%`;
+			let cityElement = document.querySelector('#current-city');
+			let iconElement = document.querySelector('#icon');
+			temperatureElement.innerHTML = Math.round(
+				response.data.temperature.current
+			);
+			humidityElement.innerHTML = `humidity: ${response.data.temperature.humidity}%`;
 			windElement.innerHTML = `wind: ${Math.round(
 				response.data.wind.speed
 			)} km/hr`;
-			descriptionElement.innerHTML = response.data.weather[0].main;
+			descriptionElement.innerHTML = response.data.condition.description;
+			iconElement.setAttribute('src', `${response.data.condition.icon_url}`);
+
 			cityElement.innerHTML = location;
 		});
 	});
 }
+
 
 let button = document.querySelector('#button-addon2');
 button.addEventListener('click', changeWeatherDataByCity);
