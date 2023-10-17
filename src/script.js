@@ -109,6 +109,9 @@ button.addEventListener('click', changeWeatherDataByCity);
 let geoButton = document.querySelector('#geo-button');
 geoButton.addEventListener('click', changeWeatherDataByGeo);
 
+let form = document.querySelector('#form');
+form.addEventListener('submit', changeWeatherDataByCity);
+
 //changing temperature units
 
 let fahrenheit = document.querySelector('#fahrenheit-link');

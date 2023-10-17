@@ -39,25 +39,31 @@
 						GO
 					</button>
 				</div> -->
-				<div class="input-group">
-					<input
-						type="text"
-						id="form-input"
-						class="form-control"
-						placeholder="Enter a city..."
-						aria-label="Recipient's username with two button addons"
-					/>
-					<button
-						class="btn btn-outline-secondary"
-						type="button"
-						id="button-addon2"
-					>
-						GO
-					</button>
-					<button class="btn btn-outline-secondary" type="button" id="geo-button">
-						Use my location
-					</button>
-				</div>
+				<form id="form" action="">
+					<div class="input-group">
+						<input
+							type="text"
+							id="form-input"
+							class="form-control"
+							placeholder="Enter a city..."
+							aria-label="Recipient's username with two button addons"
+						/>
+						<button
+							class="btn btn-outline-secondary"
+							type="button"
+							id="button-addon2"
+						>
+							GO
+						</button>
+						<button
+							class="btn btn-outline-secondary"
+							type="button"
+							id="geo-button"
+						>
+							Use my location
+						</button>
+					</div>
+				</form>
 				<div class="row">
 					<div class="col-4">
 						<img id="image-main" src="images/sun.svg" alt="sunny" />
@@ -109,7 +115,12 @@
 					</div>
 				</div>
 			</div>
-			<p class="source-link"><a href="https://github.com/Victoriia-Melnyk/weather__app">Open-source code</a> by Viktoriia Melnyk</p>
+			<p class="source-link">
+				<a href="https://github.com/Victoriia-Melnyk/weather__app"
+					>Open-source code</a
+				>
+				by Viktoriia Melnyk
+			</p>
 		</div>
 		<script src="src/script.js"></script>
 	</body>
