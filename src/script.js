@@ -78,6 +78,7 @@ function changeWeatherDataByCity(event) {
 		)} km/hr`;
 		descriptionElement.innerHTML = response.data.condition.description;
 		iconElement.setAttribute('src', `${response.data.condition.icon_url}`);
+		iconElement.setAttribute('alt', `${response.data.condition.icon}`);
 	});
 }
 
@@ -89,6 +90,7 @@ function changeWeatherDataByGeo(event) {
 		let key = 'aao33d4100dc1f18c42d1b9teb580408';
 		let url = `https://api.shecodes.io/weather/v1/current?lon=${longtitude}&lat=${latitude}&key=${key}&units=metric`;
 		axios.get(url).then(response => {
+			console.log(response)
 			let location = response.data.city;
 			let temperatureElement = document.querySelector('#temperature');
 			let humidityElement = document.querySelector('#humidity');
@@ -105,6 +107,7 @@ function changeWeatherDataByGeo(event) {
 			)} km/hr`;
 			descriptionElement.innerHTML = response.data.condition.description;
 			iconElement.setAttribute('src', `${response.data.condition.icon_url}`);
+			iconElement.setAttribute('alt', `${response.data.condition.icon}`);
 
 			cityElement.innerHTML = location;
 		});
