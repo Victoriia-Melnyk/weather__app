@@ -1,6 +1,6 @@
 let currentDate = new Date();
 
-//format date
+//format date////////////////////////////
 function formatDate(date) {
 	let days = [
 		'Sunday',
@@ -29,7 +29,7 @@ function formatDate(date) {
 let currentDateElement = document.querySelector('#current-date');
 currentDateElement.innerHTML = formatDate(currentDate);
 
-//changing month
+//changing month/////////////////////////
 function formatMonth(date) {
 	let months = [
 		'January',
@@ -54,7 +54,7 @@ function formatMonth(date) {
 let monthElement = document.querySelector('#current-month');
 monthElement.innerHTML = formatMonth(currentDate);
 
-//showing real weather data
+//////////////////////showing real weather data////////////////////////////////
 
 function changeWeatherDataByCity(event) {
 	event.preventDefault();
@@ -65,7 +65,6 @@ function changeWeatherDataByCity(event) {
 	let key = 'aao33d4100dc1f18c42d1b9teb580408';
 	let url = `https://api.shecodes.io/weather/v1/current?query=${currentCity.innerHTML}&key=${key}&units=metric`;
 	axios.get(`${url}`).then(response => {
-		console.log(response);
 		let temperatureElement = document.querySelector('#temperature');
 		let humidityElement = document.querySelector('#humidity');
 		let windElement = document.querySelector('#wind');
@@ -80,6 +79,7 @@ function changeWeatherDataByCity(event) {
 		iconElement.setAttribute('src', `${response.data.condition.icon_url}`);
 		iconElement.setAttribute('alt', `${response.data.condition.icon}`);
 	});
+	getForecast();
 }
 
 function changeWeatherDataByGeo() {
@@ -111,6 +111,7 @@ function changeWeatherDataByGeo() {
 			cityElement.innerHTML = location;
 		});
 	});
+	getForecastGeo();
 }
 
 changeWeatherDataByGeo();
@@ -124,7 +125,7 @@ geoButton.addEventListener('click', changeWeatherDataByGeo);
 let form = document.querySelector('#form');
 form.addEventListener('submit', changeWeatherDataByCity);
 
-//changing temperature units
+//////////////////////changing temperature units/////////////////
 
 let fahrenheit = document.querySelector('#fahrenheit-link');
 let celsius = document.querySelector('#celcius-link');
@@ -152,3 +153,62 @@ fahrenheit.addEventListener('click', changeTemperatureInfahrenheit);
 
 celsius.addEventListener('click', changeTemperatureInCelcius);
 
+/////////////////////// doing 5day forecast////////////////
+function getForecast() {
+  let key = 'aao33d4100dc1f18c42d1b9teb580408';
+	let city = document.querySelector('#form-input').value;
+
+	let url = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${key}&units=metric`;
+	axios.get(`${url}`).then(response => {
+		for (let i = 0; i <= 4; i++) {
+			let forecastDay = response.data.daily[i];
+			let icon = document.querySelector(`#forecastImage_${i}`);
+			let day = document.querySelector(`#forecastDay_${i}`);
+			let maxTemp = document.querySelector(`#forecastTempMax_${i}`);
+			let minTemp = document.querySelector(`#forecastTempMin_${i}`);
+			icon.style.width = '100px';
+			icon.setAttribute('src', `${forecastDay.condition.icon_url}`);
+			day.innerHTML = formatDay(forecastDay.time);
+			maxTemp.innerHTML = Math.round(forecastDay.temperature.maximum) + '°';
+			minTemp.innerHTML = Math.round(forecastDay.temperature.minimum) + '°';
+		}
+	});
+}
+
+function getForecastGeo() {
+  navigator.geolocation.getCurrentPosition(position => {
+		let latitude = position.coords.latitude;
+		let longtitude = position.coords.longitude;
+		let key = 'aao33d4100dc1f18c42d1b9teb580408';
+		let url = `https://api.shecodes.io/weather/v1/forecast?lon=${longtitude}&lat=${latitude}&key=${key}&units=metric`;
+		axios.get(url).then(response => {
+			for (let i = 0; i <= 4; i++) {
+				let forecastDay = response.data.daily[i];
+				let icon = document.querySelector(`#forecastImage_${i}`);
+				let day = document.querySelector(`#forecastDay_${i}`);
+				let maxTemp = document.querySelector(`#forecastTempMax_${i}`);
+				let minTemp = document.querySelector(`#forecastTempMin_${i}`);
+				icon.style.width = '100px';
+				icon.setAttribute('src', `${forecastDay.condition.icon_url}`);
+				day.innerHTML = formatDay(forecastDay.time);
+				maxTemp.innerHTML = Math.round(forecastDay.temperature.maximum) + '°';
+				minTemp.innerHTML = Math.round(forecastDay.temperature.minimum) + '°';
+			}
+		});
+	});
+}
+
+function formatDay(timestamp) {
+  let date = new Date(timestamp * 1000);
+	let day = date.getDay();
+	let days = [
+		'Sun',
+		'Mon',
+		'Tue',
+		'Wed',
+		'Thu',
+		'Fri',
+		'Sat',
+	];
+  return days[day];
+}

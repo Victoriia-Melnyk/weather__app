@@ -60,3 +60,9 @@ img {
   text-align: center;
 	color: #fff;
 }
+
+.forecast-temperature-min {
+  color: grey;
+}
+
+
